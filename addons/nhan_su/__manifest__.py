@@ -1,40 +1,33 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "nhan_su",
-
-    'summary': """
-        Short (1 phrase/line) summary of the module's purpose, used as
-        subtitle on modules listing or apps.openerp.com""",
-
+    'name': "Quản lý Nhân sự (HRM)",
+    'summary': "Module nền: quản lý nhân viên, phòng ban, chức vụ cho hệ thống ERP",
     'description': """
-        Long description of module's purpose
+        Module HRM – Quản lý Nhân sự
+        ==============================
+        - Quản lý hồ sơ nhân viên (CRUD đầy đủ)
+        - Quản lý đơn vị / phòng ban
+        - Quản lý chức vụ
+        - Lịch sử công tác
+        - Chứng chỉ / bằng cấp
+        - Trạng thái làm việc
+        - Dữ liệu nhân viên là nguồn gốc cho các module Dự án và Công việc
     """,
-
-    'author': "My Company",
-    'website': "http://www.yourcompany.com",
-
-    # Categories can be used to filter modules in modules listing
-    # Check https://github.com/odoo/odoo/blob/15.0/odoo/addons/base/data/ir_module_category_data.xml
-    # for the full list
-    'category': 'Uncategorized',
-    'version': '0.1',
-
-    # any module necessary for this one to work correctly
-    'depends': ['base'],
-
-    # always loaded
+    'author': "FIT-DNU – Nhóm BTL",
+    'category': 'Human Resources',
+    'version': '1.0',
+    'depends': ['base', 'mail'],
     'data': [
         'security/ir.model.access.csv',
-        'views/chuc_vu.xml',
-        'views/don_vi.xml',
-        'views/nhan_vien.xml',
-        'views/lich_su_cong_tac.xml',
-        'views/chung_chi_bang_cap.xml',
-        'views/danh_sach_chung_chi_bang_cap.xml',
+        'data/demo_data.xml',
+        'views/don_vi_views.xml',
+        'views/chuc_vu_views.xml',
+        'views/nhan_vien_views.xml',
+        'views/lich_su_cong_tac_views.xml',
+        'views/chung_chi_views.xml',
         'views/menu.xml',
     ],
-    # only loaded in demonstration mode
-    'demo': [
-        'demo/demo.xml',
-    ],
+    'installable': True,
+    'application': True,
+    'license': 'LGPL-3',
 }

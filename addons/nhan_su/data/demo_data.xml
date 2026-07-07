@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Đơn vị -->
+        <record id="don_vi_cntt" model="don_vi">
+            <field name="ma_don_vi">PB_CNTT</field>
+            <field name="ten_don_vi">Phòng Công nghệ Thông tin</field>
+        </record>
+        <record id="don_vi_kinh_doanh" model="don_vi">
+            <field name="ma_don_vi">PB_KD</field>
+            <field name="ten_don_vi">Phòng Kinh doanh</field>
+        </record>
+        <record id="don_vi_nhan_su" model="don_vi">
+            <field name="ma_don_vi">PB_NS</field>
+            <field name="ten_don_vi">Phòng Nhân sự</field>
+        </record>
+
+        <!-- Chức vụ -->
+        <record id="cv_pm" model="chuc_vu">
+            <field name="ma_chuc_vu">CV_PM</field>
+            <field name="ten_chuc_vu">Project Manager</field>
+        </record>
+        <record id="cv_dev" model="chuc_vu">
+            <field name="ma_chuc_vu">CV_DEV</field>
+            <field name="ten_chuc_vu">Lập trình viên</field>
+        </record>
+        <record id="cv_qa" model="chuc_vu">
+            <field name="ma_chuc_vu">CV_QA</field>
+            <field name="ten_chuc_vu">Kiểm thử viên</field>
+        </record>
+        <record id="cv_hr" model="chuc_vu">
+            <field name="ma_chuc_vu">CV_HR</field>
+            <field name="ten_chuc_vu">Chuyên viên Nhân sự</field>
+        </record>
+        <record id="cv_ba" model="chuc_vu">
+            <field name="ma_chuc_vu">CV_BA</field>
+            <field name="ten_chuc_vu">Business Analyst</field>
+        </record>
+
+        <!-- Nhân viên -->
+        <record id="nv_an" model="nhan_vien">
+            <field name="ma_dinh_danh">nguyenan_ns</field>
+            <field name="ho_ten_dem">Nguyễn Văn</field>
+            <field name="ten">An</field>
+            <field name="ngay_sinh">1990-03-15</field>
+            <field name="gioi_tinh">nam</field>
+            <field name="email">nguyenan@company.com</field>
+            <field name="so_dien_thoai">0901234501</field>
+            <field name="don_vi_id" ref="don_vi_cntt"/>
+            <field name="chuc_vu_id" ref="cv_pm"/>
+            <field name="ngay_vao_lam">2018-01-10</field>
+            <field name="trang_thai">dang_lam</field>
+        </record>
+        <record id="nv_binh" model="nhan_vien">
+            <field name="ma_dinh_danh">tranthib_ns</field>
+            <field name="ho_ten_dem">Trần Thị</field>
+            <field name="ten">Bình</field>
+            <field name="ngay_sinh">1993-07-20</field>
+            <field name="gioi_tinh">nu</field>
+            <field name="email">tranthib@company.com</field>
+            <field name="so_dien_thoai">0901234502</field>
+            <field name="don_vi_id" ref="don_vi_cntt"/>
+            <field name="chuc_vu_id" ref="cv_dev"/>
+            <field name="ngay_vao_lam">2019-06-01</field>
+            <field name="trang_thai">dang_lam</field>
+        </record>
+        <record id="nv_cuong" model="nhan_vien">
+            <field name="ma_dinh_danh">lehvc_ns</field>
+            <field name="ho_ten_dem">Lê Hoàng Văn</field>
+            <field name="ten">Cường</field>
+            <field name="ngay_sinh">1995-11-05</field>
+            <field name="gioi_tinh">nam</field>
+            <field name="email">lehvc@company.com</field>
+            <field name="so_dien_thoai">0901234503</field>
+            <field name="don_vi_id" ref="don_vi_cntt"/>
+            <field name="chuc_vu_id" ref="cv_dev"/>
+            <field name="ngay_vao_lam">2020-03-15</field>
+            <field name="trang_thai">dang_lam</field>
+        </record>
+        <record id="nv_dung" model="nhan_vien">
+            <field name="ma_dinh_danh">phamtd_ns</field>
+            <field name="ho_ten_dem">Phạm Thị</field>
+            <field name="ten">Dung</field>
+            <field name="ngay_sinh">1992-04-22</field>
+            <field name="gioi_tinh">nu</field>
+            <field name="email">phamtd@company.com</field>
+            <field name="so_dien_thoai">0901234504</field>
+            <field name="don_vi_id" ref="don_vi_cntt"/>
+            <field name="chuc_vu_id" ref="cv_qa"/>
+            <field name="ngay_vao_lam">2019-09-01</field>
+            <field name="trang_thai">dang_lam</field>
+        </record>
+        <record id="nv_em" model="nhan_vien">
+            <field name="ma_dinh_danh">vothie_ns</field>
+            <field name="ho_ten_dem">Võ Thị</field>
+            <field name="ten">Em</field>
+            <field name="ngay_sinh">1998-02-14</field>
+            <field name="gioi_tinh">nu</field>
+            <field name="email">vothie@company.com</field>
+            <field name="so_dien_thoai">0901234505</field>
+            <field name="don_vi_id" ref="don_vi_kinh_doanh"/>
+            <field name="chuc_vu_id" ref="cv_ba"/>
+            <field name="ngay_vao_lam">2021-01-05</field>
+            <field name="trang_thai">dang_lam</field>
+        </record>
+
+    </data>
+</odoo>

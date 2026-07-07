@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem id="menu_du_an_root"          name="Quản lý Dự án"          sequence="2"/>
+
+        <!-- Dự án -->
+        <menuitem id="menu_du_an_kanban"        name="Bảng dự án (Kanban)"    parent="menu_du_an_root" sequence="1"  action="action_du_an"/>
+        <menuitem id="menu_du_an_tat_ca"        name="Tất cả dự án"           parent="menu_du_an_root" sequence="2"  action="action_du_an_tree"/>
+        <menuitem id="menu_du_an_trien_khai"    name="Đang triển khai"        parent="menu_du_an_root" sequence="3"  action="action_du_an_dang_trien_khai"/>
+        <menuitem id="menu_du_an_hoan_thanh"    name="Đã hoàn thành"          parent="menu_du_an_root" sequence="4"  action="action_du_an_hoan_thanh"/>
+
+        <!-- AI -->
+        <menuitem id="menu_du_an_ai"            name="🤖 Trợ lý AI"           parent="menu_du_an_root" sequence="9" action="action_wizard_ai_du_an"/>
+
+        <!-- Báo cáo -->
+        <menuitem id="menu_du_an_bao_cao_root"  name="Báo cáo"                parent="menu_du_an_root" sequence="10"/>
+        <menuitem id="menu_du_an_bao_cao"       name="Thống kê dự án"         parent="menu_du_an_bao_cao_root" sequence="1" action="action_du_an_bao_cao"/>
+    </data>
+</odoo>

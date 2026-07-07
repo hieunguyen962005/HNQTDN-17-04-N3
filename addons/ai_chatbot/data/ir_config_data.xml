@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Tạo cấu hình AI mặc định -->
+        <record id="ai_config_default" model="ai.config">
+            <field name="ten_cau_hinh">Cấu hình mặc định (Google Gemini Free)</field>
+            <field name="model_ai">gemini-1.5-flash</field>
+            <field name="active">True</field>
+            <field name="ghi_chu">Lấy API key miễn phí tại https://aistudio.google.com/apikey</field>
+        </record>
+    </data>
+</odoo>

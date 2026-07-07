@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Dữ liệu mẫu dự án – tham chiếu nhân viên từ HRM -->
+        <record id="du_an_erp" model="du_an">
+            <field name="ma_du_an">DA001</field>
+            <field name="ten_du_an">Triển khai hệ thống ERP nội bộ</field>
+            <field name="khach_hang">Công ty ABC</field>
+            <field name="ngay_bat_dau">2026-01-10</field>
+            <field name="ngay_ket_thuc">2026-06-30</field>
+            <field name="truong_du_an_id" ref="nhan_su.nv_an"/>
+            <field name="thanh_vien_ids" eval="[(6, 0, [ref('nhan_su.nv_an'), ref('nhan_su.nv_binh'), ref('nhan_su.nv_cuong'), ref('nhan_su.nv_dung')])]"/>
+            <field name="don_vi_chu_quan_id" ref="nhan_su.don_vi_cntt"/>
+            <field name="loai_du_an">khach_hang</field>
+            <field name="do_uu_tien">cao</field>
+            <field name="ngan_sach">500000000</field>
+            <field name="trang_thai">nhap</field>
+            <field name="mo_ta">&lt;p&gt;Triển khai hệ thống ERP quản lý toàn diện cho công ty ABC bao gồm các module HRM, Dự án và Công việc.&lt;/p&gt;</field>
+        </record>
+        <record id="du_an_mobile" model="du_an">
+            <field name="ma_du_an">DA002</field>
+            <field name="ten_du_an">Phát triển ứng dụng mobile nội bộ</field>
+            <field name="ngay_bat_dau">2026-03-01</field>
+            <field name="ngay_ket_thuc">2026-08-31</field>
+            <field name="truong_du_an_id" ref="nhan_su.nv_binh"/>
+            <field name="thanh_vien_ids" eval="[(6, 0, [ref('nhan_su.nv_binh'), ref('nhan_su.nv_cuong'), ref('nhan_su.nv_em')])]"/>
+            <field name="don_vi_chu_quan_id" ref="nhan_su.don_vi_cntt"/>
+            <field name="loai_du_an">noi_bo</field>
+            <field name="do_uu_tien">trung</field>
+            <field name="trang_thai">nhap</field>
+        </record>
+    </data>
+</odoo>

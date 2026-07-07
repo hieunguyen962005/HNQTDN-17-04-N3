@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- SESSION FORM: giao diện chat chính (nhập câu hỏi + xem lịch sử cùng 1 chỗ) -->
+        <record id="view_ai_chat_session_form" model="ir.ui.view">
+            <field name="name">ai.chat.session.form</field>
+            <field name="model">ai.chat.session</field>
+            <field name="arch" type="xml">
+                <form string="🤖 AI Chatbot – Trợ lý ERP Toàn hệ thống">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" icon="fa-trash"
+                                    type="object" name="action_xoa_lich_su">
+                                <div class="o_stat_info">
+                                    <span class="o_stat_text">Xóa lịch sử</span>
+                                </div>
+                            </button>
+                            <button class="oe_stat_button" icon="fa-plus"
+                                    type="object" name="action_phien_moi">
+                                <div class="o_stat_info">
+                                    <span class="o_stat_text">Phiên mới</span>
+                                </div>
+                            </button>
+                        </div>
+
+                        <div class="oe_title">
+                            <h2>🤖 <field name="tieu_de" style="display:inline"/></h2>
+                        </div>
+
+                        <!-- Hướng dẫn -->
+                        <div style="background:#e8f4fd;padding:12px 16px;border-radius:8px;
+                                    margin-bottom:16px;border-left:4px solid #4a90d9;">
+                            <b style="color:#2c5f8a;">💡 Hỏi bất kỳ thông tin nào trong hệ thống:</b><br/>
+                            <span style="color:#555;font-size:13px;">
+                                📋 Dự án nào đang bị chậm tiến độ? &#160;|&#160;
+                                👥 Phòng CNTT có bao nhiêu nhân viên? &#160;|&#160;
+                                ⚠️ Ai đang có nhiều việc quá hạn nhất? &#160;|&#160;
+                                📊 Tóm tắt tình trạng toàn hệ thống
+                            </span>
+                        </div>
+
+                        <!-- Lịch sử tin nhắn -->
+                        <field name="tin_nhan_ids" nolabel="1">
+                            <tree create="false" delete="false" editable="false"
+                                  decoration-info="loai=='user'">
+                                <field name="loai" invisible="1"/>
+                                <field name="noi_dung_html" widget="html" string="Hội thoại"/>
+                            </tree>
+                        </field>
+
+                        <!-- Ô nhập câu hỏi mới — nằm ngay trên form này -->
+                        <separator string="✏️ Nhập câu hỏi mới"/>
+                        <group col="1">
+                            <field name="cau_hoi_moi" nolabel="1"
+                                   placeholder="VD: Tóm tắt tình trạng các dự án đang chạy? / Nhân viên nào đang overload? / Dự án ABC tiến độ thế nào?"
+                                   style="min-height:70px;font-size:14px;"/>
+                        </group>
+                        <div>
+                            <button name="action_gui_tin_nhan"
+                                    string="📤 Gửi câu hỏi cho AI"
+                                    type="object" class="btn-primary"/>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_ai_chat_session_tree" model="ir.ui.view">
+            <field name="name">ai.chat.session.tree</field>
+            <field name="model">ai.chat.session</field>
+            <field name="arch" type="xml">
+                <tree string="Lịch sử Chat AI">
+                    <field name="tieu_de"/>
+                    <field name="so_tin" string="Số tin"/>
+                    <field name="create_date" string="Ngày tạo"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- CONFIG FORM -->
+        <record id="view_ai_config_form" model="ir.ui.view">
+            <field name="name">ai.config.form</field>
+            <field name="model">ai.config</field>
+            <field name="arch" type="xml">
+                <form string="Cấu hình AI Chatbot">
+                    <sheet>
+                        <div style="background:#fff3cd;padding:14px;border-radius:8px;
+                                    margin-bottom:16px;border-left:4px solid #ffc107;">
+                            <b>📌 Hướng dẫn lấy Google Gemini API Key MIỄN PHÍ:</b><br/><br/>
+                            1. Vào <b>https://aistudio.google.com/apikey</b><br/>
+                            2. Đăng nhập tài khoản Google<br/>
+                            3. Bấm <b>"Create API Key"</b> → Copy key (dạng <b>AIzaSy...</b>)<br/>
+                            4. Dán vào ô API Key bên dưới → bấm Lưu<br/><br/>
+                            <span style="color:#28a745;font-weight:bold;">
+                                ✅ Hoàn toàn miễn phí · Không cần thẻ tín dụng
+                            </span>
+                        </div>
+                        <group>
+                            <field name="ten_cau_hinh"/>
+                            <field name="gemini_api_key" password="True"
+                                   placeholder="AIzaSy... (dán key vào đây)"/>
+                            <field name="model_ai" widget="radio"/>
+                            <field name="active"/>
+                        </group>
+                        <group string="Ghi chú">
+                            <field name="ghi_chu" nolabel="1"
+                                   placeholder="Ghi chú về cấu hình này..."/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_ai_config_tree" model="ir.ui.view">
+            <field name="name">ai.config.tree</field>
+            <field name="model">ai.config</field>
+            <field name="arch" type="xml">
+                <tree string="Cấu hình AI">
+                    <field name="ten_cau_hinh"/>
+                    <field name="model_ai"/>
+                    <field name="active" widget="boolean_toggle"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- ACTIONS -->
+        <!-- Mở thẳng vào 1 phiên chat mới, cùng màn hình có cả ô nhập lẫn lịch sử -->
+        <record id="action_ai_chatbot" model="ir.actions.act_window">
+            <field name="name">🤖 Chat với AI</field>
+            <field name="res_model">ai.chat.session</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_ai_chat_session_form"/>
+            <field name="target">current</field>
+            <field name="context">{}</field>
+        </record>
+
+        <record id="action_ai_chat_history" model="ir.actions.act_window">
+            <field name="name">Lịch sử Chat AI</field>
+            <field name="res_model">ai.chat.session</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="action_ai_config" model="ir.actions.act_window">
+            <field name="name">Cấu hình AI</field>
+            <field name="res_model">ai.config</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>

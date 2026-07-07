@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Cron job chạy mỗi ngày lúc 00:01 để cập nhật trạng thái quá hạn -->
+        <record id="cron_cap_nhat_qua_han" model="ir.cron">
+            <field name="name">Công việc: Cập nhật trạng thái quá hạn hàng ngày</field>
+            <field name="model_id" ref="model_cong_viec"/>
+            <field name="state">code</field>
+            <field name="code">model._cap_nhat_qua_han()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="active">True</field>
+        </record>
+    </data>
+</odoo>

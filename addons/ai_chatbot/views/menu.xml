@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Menu AI xuất hiện trên thanh điều hướng chính -->
+        <menuitem id="menu_ai_root"
+                  name="🤖 AI Chatbot"
+                  sequence="99"
+                  web_icon="ai_chatbot,static/description/icon.png"/>
+
+        <menuitem id="menu_ai_chat"
+                  name="💬 Chat với AI"
+                  parent="menu_ai_root"
+                  sequence="1"
+                  action="action_ai_chatbot"/>
+
+        <menuitem id="menu_ai_history"
+                  name="📜 Lịch sử hội thoại"
+                  parent="menu_ai_root"
+                  sequence="2"
+                  action="action_ai_chat_history"/>
+
+        <menuitem id="menu_ai_config"
+                  name="⚙️ Cấu hình API Key"
+                  parent="menu_ai_root"
+                  sequence="10"
+                  action="action_ai_config"/>
+    </data>
+</odoo>

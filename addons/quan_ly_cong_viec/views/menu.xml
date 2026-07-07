@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem id="menu_cv_root"          name="Quản lý Công việc"        sequence="3"/>
+
+        <!-- Công việc -->
+        <menuitem id="menu_cv_kanban"        name="Bảng công việc (Kanban)"   parent="menu_cv_root" sequence="1" action="action_cong_viec"/>
+        <menuitem id="menu_cv_tat_ca"        name="Tất cả công việc"          parent="menu_cv_root" sequence="2" action="action_cong_viec_tree"/>
+        <menuitem id="menu_cv_qua_han"       name="⚠️ Quá hạn"                parent="menu_cv_root" sequence="3" action="action_cong_viec_qua_han"/>
+        <menuitem id="menu_cv_hoan_thanh"    name="Đã hoàn thành"             parent="menu_cv_root" sequence="4" action="action_cv_hoan_thanh"/>
+
+        <!-- Thao tác -->
+        <menuitem id="menu_cv_thao_tac"      name="Thao tác"                  parent="menu_cv_root" sequence="8"/>
+        <menuitem id="menu_cv_phan_cong"     name="Phân công hàng loạt"       parent="menu_cv_thao_tac" sequence="1" action="action_wizard_phan_cong"/>
+
+        <!-- Báo cáo -->
+        <menuitem id="menu_cv_bao_cao_root"  name="Báo cáo"                   parent="menu_cv_root" sequence="10"/>
+        <menuitem id="menu_cv_thong_ke"      name="Thống kê công việc"         parent="menu_cv_bao_cao_root" sequence="1" action="action_cv_thong_ke"/>
+        <menuitem id="menu_cv_theo_nv"       name="Theo nhân viên"             parent="menu_cv_bao_cao_root" sequence="2" action="action_cv_theo_nhan_vien"/>
+    </data>
+</odoo>

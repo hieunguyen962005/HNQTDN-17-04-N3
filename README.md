@@ -4,7 +4,7 @@
     </a>
 </h2>
 <h2 align="center">
-    PLATFORM ERP
+    Quản lý Dự án + Quản lý Công việc (Tích hợp AI Chatbot)
 </h2>
 <div align="center">
     <p align="center">
@@ -20,7 +20,96 @@
 </div>
 
 ## 📖 1. Giới thiệu
-Platform ERP được áp dụng vào học phần Thực tập doanh nghiệp dựa trên mã nguồn mở Odoo. 
+Platform ERP được áp dụng vào học phần Thực tập doanh nghiệp dựa trên mã nguồn mở Odoo 15. Dự án này tập trung xây dựng và tích hợp 3 phân hệ nghiệp vụ cốt lõi — **Quản lý Nhân sự**, **Quản lý Dự án**, **Quản lý Công việc** — cùng một phân hệ mở rộng là **Trợ lý AI Chatbot**, cho phép người dùng tra cứu tình trạng toàn hệ thống bằng câu hỏi tiếng Việt tự nhiên thông qua Google Gemini API. Với nền tảng Odoo, hệ thống cho phép quản lý dữ liệu doanh nghiệp một cách linh hoạt, mở rộng và dễ tùy chỉnh.
+
+---
+
+## 📄 Poster Dự án
+
+<p align="center">
+    <a href="./Poster.pdf">
+        <img src="docs/img/poster_preview.png" alt="Poster Dự án" width="600"/>
+    </a>
+</p>
+
+📌 Poster trình bày tổng quan về kiến trúc hệ thống, các phân hệ chính và tính năng nổi bật của dự án.
+Bấm vào ảnh để xem bản PDF đầy đủ độ phân giải (dùng khi in khổ lớn).
+
+---
+
+## ⚙️ Các phân hệ chính
+
+### 1. Quản lý Nhân sự (`nhan_su`)
+- Quản lý thông tin nhân viên, chức vụ, đơn vị/phòng ban
+- Theo dõi lịch sử công tác và chứng chỉ của từng nhân viên
+- Là dữ liệu nền tảng dùng chung cho phân hệ Dự án, Công việc và AI Chatbot
+
+### 2. Quản lý Dự án (`quan_ly_du_an`)
+- Quản lý dự án từ khởi tạo đến hoàn thành: mã dự án, trưởng dự án, thành viên tham gia
+- Tự động tính tiến độ dự án (%) dựa trên số công việc đã hoàn thành
+- Wizard đề xuất bằng AI hỗ trợ lập kế hoạch dự án nhanh hơn
+- Liên kết chặt chẽ với phân hệ Nhân sự và Công việc
+
+### 3. Quản lý Công việc (`quan_ly_cong_viec`)
+- Quản lý công việc chi tiết trong từng dự án, gán người phụ trách và deadline
+- Tự động cảnh báo công việc quá hạn (`la_qua_han`)
+- Wizard phân công công việc hàng loạt cho nhiều nhân viên cùng lúc
+- Báo cáo thống kê khối lượng công việc theo từng nhân viên
+
+### 4. Trợ lý AI Chatbot (`ai_chatbot`)
+- Cho phép đặt câu hỏi bằng tiếng Việt tự nhiên (VD: *"Dự án nào đang chậm tiến độ?"*, *"Ai đang có nhiều việc quá hạn nhất?"*)
+- Thu thập dữ liệu thời gian thực từ cả 3 phân hệ HRM – Dự án – Công việc làm ngữ cảnh trả lời
+- Tích hợp Google Gemini API, hỗ trợ hội thoại nhiều lượt (multi-turn) và cơ chế tự phục hồi khi máy chủ AI quá tải
+- Cấu hình API Key và lựa chọn model AI tập trung, không cần chỉnh sửa mã nguồn
+
+---
+
+## 📸 Giao diện & Chức năng
+
+> ⚠️ Các ảnh bên dưới là vị trí đề xuất — hãy tự chụp màn hình hệ thống đang chạy và đặt đúng tên file vào thư mục `docs/img/` tương ứng trước khi nộp báo cáo.
+
+### Phân hệ Quản lý Dự án
+Quản lý toàn diện dự án, thành viên và tiến độ.
+
+| Danh sách Dự án | Form Dự án |
+|:---:|:---:|
+| ![Danh sách Dự án](./docs/img/du_an_tree.png) | ![Form Dự án](./docs/img/du_an_form.png) |
+| *Danh sách dự án với trạng thái* | *Chi tiết dự án với thành viên và tiến độ* |
+
+| Kanban Dự án |
+|:---:|:---:|
+| ![Kanban Dự án](./docs/img/du_an_kanban.png) |
+| *View kanban theo trạng thái, thanh tiến độ trên từng thẻ* |
+### Phân hệ Quản lý Công việc
+Quản lý nhiệm vụ chi tiết và theo dõi tiến độ.
+
+| Danh sách Công việc | Kanban Công việc |
+|:---:|:---:|
+| ![Danh sách Công việc](./docs/img/cong_viec_tree.png) | ![Kanban Công việc](./docs/img/cong_viec_kanban.png) |
+| *Danh sách công việc, đánh dấu công việc quá hạn* | *Thẻ công việc tô màu cảnh báo khi quá hạn* |
+
+| Form Công việc | Wizard Phân công |
+|:---:|:---:|
+| ![Form Công việc](./docs/img/cong_viec_form.png) | ![Wizard Phân công](./docs/img/wizard_phan_cong.png) |
+| *Chi tiết công việc với deadline và người phụ trách* | *Phân công nhiều công việc cho nhiều nhân viên cùng lúc* |
+
+### Phân hệ Nhân sự (HR)
+Quản lý hồ sơ nhân sự, lịch sử công tác và chứng chỉ.
+
+| Danh sách Nhân viên | Form Nhân viên |
+|:---:|:---:|
+| ![Danh sách Nhân viên](./docs/img/nhan_vien_tree.png) | ![Form Nhân viên](./docs/img/nhan_vien_form.png) |
+| *Danh sách nhân viên theo phòng ban* | *Hồ sơ nhân viên: chức vụ, đơn vị, lịch sử công tác, chứng chỉ* |
+
+### Phân hệ AI Chatbot
+Trợ lý AI tra cứu dữ liệu toàn hệ thống bằng ngôn ngữ tự nhiên.
+
+| Cấu hình API Key | Hội thoại AI Chatbot |
+|:---:|:---:|
+| ![Cấu hình API Key](./docs/img/ai_config.png) | ![Chat AI](./docs/img/ai_chat_session.png) |
+| *Cấu hình Google Gemini API Key và lựa chọn model* | *Hội thoại thực tế: tra cứu tiến độ dự án, công việc quá hạn* |
+
+---
 
 ## 🔧 2. Các công nghệ được sử dụng
 <div align="center">
@@ -34,29 +123,25 @@ Platform ERP được áp dụng vào học phần Thực tập doanh nghiệp d
 [![XML](https://img.shields.io/badge/XML-FF6600?style=for-the-badge&logo=codeforces&logoColor=white)](https://www.w3.org/XML/)
 ### Cơ sở dữ liệu
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+### Trợ lý AI
+[![Google Gemini](https://img.shields.io/badge/Google%20Gemini-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white)](https://ai.google.dev/gemini-api/docs)
 </div>
 
-## 🚀 3. Các project đã thực hiện dựa trên Platform
+## ⚙️ 3. Cài đặt
 
-Một số project sinh viên đã thực hiện:
-- #### [Khoá 15](./docs/projects/K15/README.md)
-- #### [Khoá 16](./docs/projects/K16/README.md)
-- #### [Khoá 17](./docs/projects/K17/README.md)
-## ⚙️ 4. Cài đặt
+### 3.1. Cài đặt công cụ, môi trường và các thư viện cần thiết
 
-### 4.1. Cài đặt công cụ, môi trường và các thư viện cần thiết
-
-#### 4.1.1. Tải project.
+#### 3.1.1. Tải project
 ```
-git clone https://github.com/FIT-DNU/Business-Internship.git
+git clone https://github.com/TTDN-17-04-N3.git
 ```
-#### 4.1.2. Cài đặt các thư viện cần thiết
-Người sử dụng thực thi các lệnh sau đề cài đặt các thư viện cần thiết
+#### 3.1.2. Cài đặt các thư viện cần thiết
+Người sử dụng thực thi các lệnh sau để cài đặt các thư viện cần thiết
 
 ```
 sudo apt-get install libxml2-dev libxslt-dev libldap2-dev libsasl2-dev libssl-dev python3.10-distutils python3.10-dev build-essential libssl-dev libffi-dev zlib1g-dev python3.10-venv libpq-dev
 ```
-#### 4.1.3. Khởi tạo môi trường ảo.
+#### 3.1.3. Khởi tạo môi trường ảo
 - Khởi tạo môi trường ảo
 ```
 python3.10 -m venv ./venv
@@ -69,13 +154,13 @@ source venv/bin/activate
 ```
 pip3 install -r requirements.txt
 ```
-### 4.2. Setup database
+### 3.2. Setup database
 
-Khởi tạo database trên docker bằng việc thực thi file dockercompose.yml.
+Khởi tạo database trên docker bằng việc thực thi file docker-compose.yml.
 ```
 sudo docker-compose up -d
 ```
-### 4.3. Setup tham số chạy cho hệ thống
+### 3.3. Setup tham số chạy cho hệ thống
 Tạo tệp **odoo.conf** có nội dung như sau:
 ```
 [options]
@@ -87,17 +172,23 @@ db_port = 5431
 xmlrpc_port = 8069
 ```
 Có thể kế thừa từ file **odoo.conf.template**
-### 4.4. Chạy hệ thống và cài đặt các ứng dụng cần thiết
+
+### 3.4. Chạy hệ thống và cài đặt các ứng dụng cần thiết
 Lệnh chạy
 ```
 python3 odoo-bin.py -c odoo.conf -u all
 ```
 Người sử dụng truy cập theo đường dẫn _http://localhost:8069/_ để đăng nhập vào hệ thống.
 
-## 📝 5. License
+### 3.5. Cấu hình Trợ lý AI Chatbot
+1. Lấy API Key miễn phí tại: https://aistudio.google.com/apikey
+2. Vào menu **🤖 AI Chatbot → ⚙️ Cấu hình API Key** trong giao diện Odoo
+3. Dán API Key, chọn model AI (khuyến nghị `gemini-2.5-flash`), tick **Đang dùng (active)** và Lưu
+
+---
+
+## 📝 4. License
 
 © 2024 AIoTLab, Faculty of Information Technology, DaiNam University. All rights reserved.
 
 ---
-
-    

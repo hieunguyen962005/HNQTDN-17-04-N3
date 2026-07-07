@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_chung_chi_tree" model="ir.ui.view">
+            <field name="name">chung_chi_bang_cap.tree</field>
+            <field name="model">chung_chi_bang_cap</field>
+            <field name="arch" type="xml">
+                <tree string="Danh mục chứng chỉ">
+                    <field name="ma_chung_chi"/>
+                    <field name="ten_chung_chi"/>
+                    <field name="mo_ta"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_chung_chi_form" model="ir.ui.view">
+            <field name="name">chung_chi_bang_cap.form</field>
+            <field name="model">chung_chi_bang_cap</field>
+            <field name="arch" type="xml">
+                <form string="Chứng chỉ / Bằng cấp">
+                    <sheet>
+                        <group>
+                            <field name="ma_chung_chi"/>
+                            <field name="ten_chung_chi"/>
+                            <field name="mo_ta"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="action_chung_chi_bang_cap" model="ir.actions.act_window">
+            <field name="name">Danh mục chứng chỉ</field>
+            <field name="res_model">chung_chi_bang_cap</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>

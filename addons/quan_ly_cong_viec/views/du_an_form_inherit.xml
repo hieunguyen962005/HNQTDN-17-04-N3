@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--
+            Kế thừa form view của du_an (module quan_ly_du_an)
+            để thêm tab "Công việc" hiển thị cong_viec_ids.
+            Đặt ở đây vì field cong_viec_ids chỉ tồn tại khi
+            module quan_ly_cong_viec được cài (xem du_an_inherit.py).
+        -->
+        <record id="view_du_an_form_inherit_cong_viec" model="ir.ui.view">
+            <field name="name">du_an.form.inherit.cong_viec</field>
+            <field name="model">du_an</field>
+            <field name="inherit_id" ref="quan_ly_du_an.view_du_an_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page string="Công việc" name="cong_viec_tab">
+                        <field name="cong_viec_ids">
+                            <tree decoration-success="trang_thai=='hoan_thanh'"
+                                  decoration-danger="la_qua_han == True"
+                                  decoration-muted="trang_thai=='huy'">
+                                <field name="ma_cong_viec"/>
+                                <field name="ten_cong_viec"/>
+                                <field name="nguoi_phu_trach_id"/>
+                                <field name="loai_cv"/>
+                                <field name="do_uu_tien" widget="priority"/>
+                                <field name="ngay_bat_dau"/>
+                                <field name="deadline"/>
+                                <field name="la_qua_han" invisible="1"/>
+                                <field name="trang_thai" widget="badge"
+                                       decoration-info="trang_thai=='chua_bat_dau'"
+                                       decoration-primary="trang_thai=='dang_thuc_hien'"
+                                       decoration-warning="trang_thai=='cho_duyet'"
+                                       decoration-success="trang_thai=='hoan_thanh'"
+                                       decoration-danger="trang_thai in ['qua_han']"/>
+                                <button name="action_hoan_thanh" string="✓" type="object"
+                                        icon="fa-check" title="Hoàn thành"
+                                        attrs="{'invisible': [('trang_thai','not in',['dang_thuc_hien','cho_duyet'])]}"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

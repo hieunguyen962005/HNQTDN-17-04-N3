@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- ══════════════════════════════════════
+             PIVOT VIEW – Thống kê dự án
+        ══════════════════════════════════════ -->
+        <record id="view_du_an_pivot" model="ir.ui.view">
+            <field name="name">du_an.pivot</field>
+            <field name="model">du_an</field>
+            <field name="arch" type="xml">
+                <pivot string="Thống kê dự án" disable_linking="1">
+                    <field name="don_vi_chu_quan_id" type="row"/>
+                    <field name="trang_thai"         type="col"/>
+                    <field name="ngan_sach"          type="measure"/>
+                    <field name="tong_cong_viec"     type="measure"/>
+                    <field name="tien_do_phan_tram"  type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+        <!-- ══════════════════════════════════════
+             GRAPH VIEW – Biểu đồ trạng thái dự án
+        ══════════════════════════════════════ -->
+        <record id="view_du_an_graph" model="ir.ui.view">
+            <field name="name">du_an.graph</field>
+            <field name="model">du_an</field>
+            <field name="arch" type="xml">
+                <graph string="Biểu đồ dự án" type="bar">
+                    <field name="trang_thai"     type="row"/>
+                    <field name="tong_cong_viec" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <!-- ══════════════════════════════════════
+             ACTION – Báo cáo tổng quan dự án
+        ══════════════════════════════════════ -->
+        <record id="action_du_an_bao_cao" model="ir.actions.act_window">
+            <field name="name">Báo cáo Dự án</field>
+            <field name="res_model">du_an</field>
+            <field name="view_mode">pivot,graph,tree</field>
+        </record>
+
+        <!-- ══════════════════════════════════════
+             ACTION – Dự án đang triển khai
+        ══════════════════════════════════════ -->
+        <record id="action_du_an_dang_trien_khai" model="ir.actions.act_window">
+            <field name="name">Dự án đang triển khai</field>
+            <field name="res_model">du_an</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="domain">[('trang_thai','=','dang_trien_khai')]</field>
+        </record>
+
+        <!-- ══════════════════════════════════════
+             ACTION – Dự án hoàn thành
+        ══════════════════════════════════════ -->
+        <record id="action_du_an_hoan_thanh" model="ir.actions.act_window">
+            <field name="name">Dự án hoàn thành</field>
+            <field name="res_model">du_an</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('trang_thai','=','hoan_thanh')]</field>
+        </record>
+
+    </data>
+</odoo>

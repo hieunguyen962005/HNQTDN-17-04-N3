@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- ══════════════════════════════════════
+             PIVOT – Thống kê công việc
+        ══════════════════════════════════════ -->
+        <record id="view_cong_viec_pivot" model="ir.ui.view">
+            <field name="name">cong_viec.pivot</field>
+            <field name="model">cong_viec</field>
+            <field name="arch" type="xml">
+                <pivot string="Thống kê công việc" disable_linking="1">
+                    <field name="nguoi_phu_trach_id" type="row"/>
+                    <field name="trang_thai"         type="col"/>
+                    <field name="du_an_id"           type="row"/>
+                </pivot>
+            </field>
+        </record>
+
+        <!-- ══════════════════════════════════════
+             GRAPH – Biểu đồ công việc theo trạng thái
+        ══════════════════════════════════════ -->
+        <record id="view_cong_viec_graph_trang_thai" model="ir.ui.view">
+            <field name="name">cong_viec.graph.trang_thai</field>
+            <field name="model">cong_viec</field>
+            <field name="arch" type="xml">
+                <graph string="Công việc theo trạng thái" type="pie">
+                    <field name="trang_thai" type="row"/>
+                </graph>
+            </field>
+        </record>
+
+        <!-- ══════════════════════════════════════
+             GRAPH – Biểu đồ công việc theo nhân viên
+        ══════════════════════════════════════ -->
+        <record id="view_cong_viec_graph_nv" model="ir.ui.view">
+            <field name="name">cong_viec.graph.nhanvien</field>
+            <field name="model">cong_viec</field>
+            <field name="arch" type="xml">
+                <graph string="Khối lượng công việc theo nhân viên" type="bar">
+                    <field name="nguoi_phu_trach_id" type="row"/>
+                    <field name="trang_thai"         type="col"/>
+                </graph>
+            </field>
+        </record>
+
+        <!-- ══════════════════════════════════════
+             ACTIONS
+        ══════════════════════════════════════ -->
+        <record id="action_cv_thong_ke" model="ir.actions.act_window">
+            <field name="name">Thống kê công việc</field>
+            <field name="res_model">cong_viec</field>
+            <field name="view_mode">pivot,graph</field>
+        </record>
+
+        <record id="action_cv_theo_nhan_vien" model="ir.actions.act_window">
+            <field name="name">Công việc theo nhân viên</field>
+            <field name="res_model">cong_viec</field>
+            <field name="view_mode">graph,pivot,tree</field>
+            <field name="context">{'graph_view_ref': 'quan_ly_cong_viec.view_cong_viec_graph_nv'}</field>
+        </record>
+
+        <record id="action_cv_hoan_thanh" model="ir.actions.act_window">
+            <field name="name">Công việc đã hoàn thành</field>
+            <field name="res_model">cong_viec</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('trang_thai','=','hoan_thanh')]</field>
+        </record>
+
+    </data>
+</odoo>
