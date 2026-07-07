@@ -78,7 +78,7 @@ Quản lý toàn diện dự án, thành viên và tiến độ.
 
 | Kanban Dự án |
 
-| ![Kanban Dự án](./docs/img/du_an_kanban.png) 
+ ![Kanban Dự án](./docs/img/du_an_kanban.png) 
 | *View kanban theo trạng thái, thanh tiến độ trên từng thẻ* |
 ### Phân hệ Quản lý Công việc
 Quản lý nhiệm vụ chi tiết và theo dõi tiến độ.
