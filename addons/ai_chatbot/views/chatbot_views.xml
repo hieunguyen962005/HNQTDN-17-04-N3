@@ -40,7 +40,18 @@
                             </span>
                         </div>
 
+                        <!-- Lịch sử phiên -->
+                        <separator string="🕘 Lịch sử gần đây"/>
+                        <field name="lich_su_gan_day_ids" nolabel="1">
+                            <tree create="false" delete="false" editable="false">
+                                <field name="tieu_de" string="Tiêu đề phiên"/>
+                                <field name="so_tin" string="Số tin nhắn"/>
+                                <field name="create_date" string="Thời gian tạo"/>
+                            </tree>
+                        </field>
+
                         <!-- Lịch sử tin nhắn -->
+                        <separator string="💬 Hội thoại phiên này"/>
                         <field name="tin_nhan_ids" nolabel="1">
                             <tree create="false" delete="false" editable="false"
                                   decoration-info="loai=='user'">
@@ -125,14 +136,13 @@
         </record>
 
         <!-- ACTIONS -->
-        <!-- Mở thẳng vào 1 phiên chat mới, cùng màn hình có cả ô nhập lẫn lịch sử -->
-        <record id="action_ai_chatbot" model="ir.actions.act_window">
+        <delete model="ir.actions.act_window" id="action_ai_chatbot"/>
+
+        <record id="action_ai_chatbot" model="ir.actions.server">
             <field name="name">🤖 Chat với AI</field>
-            <field name="res_model">ai.chat.session</field>
-            <field name="view_mode">form</field>
-            <field name="view_id" ref="view_ai_chat_session_form"/>
-            <field name="target">current</field>
-            <field name="context">{}</field>
+            <field name="model_id" ref="model_ai_chat_session"/>
+            <field name="state">code</field>
+            <field name="code">action = model.action_mo_phien_moi_tu_menu()</field>
         </record>
 
         <record id="action_ai_chat_history" model="ir.actions.act_window">

@@ -9,9 +9,6 @@ from odoo.exceptions import UserError
 
 
 class AIChatSession(models.Model):
-
-
-
     
     _name = 'ai.chat.session'
     _description = 'Phiên Chat AI'
@@ -29,6 +26,18 @@ class AIChatSession(models.Model):
         help="Hỏi bất cứ điều gì về nhân sự, dự án, công việc trong hệ thống"
     )
 
+    lich_su_gan_day_ids = fields.Many2many(
+        'ai.chat.session', compute='_compute_lich_su_gan_day',
+        string="Lịch sử gần đây"
+    )
+
+    @api.depends('create_date')
+    def _compute_lich_su_gan_day(self):
+        for rec in self:
+            rec.lich_su_gan_day_ids = self.search(
+                [('id', '!=', rec.id or 0)], order='create_date desc', limit=5
+            )
+
     @api.depends('tin_nhan_ids')
     def _compute_so_tin(self):
         for r in self:
@@ -43,6 +52,32 @@ class AIChatSession(models.Model):
             'type'     : 'ir.actions.act_window',
             'res_model': self._name,
             'res_id'   : new.id,
+            'view_mode': 'form',
+            'target'   : 'current',
+        }
+
+    @api.model
+    def action_mo_phien_moi_tu_menu(self):
+        
+        new = self.create({'tieu_de': f"Phiên chat {date.today()}"})
+        return {
+            'type'     : 'ir.actions.act_window',
+            'res_model': self._name,
+            'res_id'   : new.id,
+            'view_mode': 'form',
+            'target'   : 'current',
+        }
+
+    @api.model
+    def action_open_latest_session(self):
+        
+        session = self.search([], order='create_date desc', limit=1)
+        if not session:
+            session = self.create({'tieu_de': 'Phiên chat mới'})
+        return {
+            'type'     : 'ir.actions.act_window',
+            'res_model': self._name,
+            'res_id'   : session.id,
             'view_mode': 'form',
             'target'   : 'current',
         }
@@ -104,7 +139,7 @@ class AIChatSession(models.Model):
             self.tieu_de = tieu_de
 
         # 6. Xóa ô nhập — KHÔNG return action điều hướng.
-        
+        # Odoo sẽ tự reload lại đúng record/form hiện tại.
         self.cau_hoi_moi = False
         return True
 
@@ -135,7 +170,7 @@ class AIChatMessage(models.Model):
         ]
 
         # ── 1. MODULE HRM ──────────────────────────────────────────
-
+        
         NhanVien = self.env['nhan_vien']
         DonVi    = self.env['don_vi']
 
@@ -313,7 +348,7 @@ Bạn có quyền truy cập dữ liệu thời gian thực từ 3 module: Nhân
                 result = json.loads(resp.read().decode('utf-8'))
                 return result['candidates'][0]['content']['parts'][0]['text']
 
-        
+        # Danh sách model thử lần lượt: model đã chọn -> các model dự phòng nhẹ hơn
         models_to_try = [model]
         for fallback in ('gemini-2.5-flash-lite', 'gemini-2.5-flash'):
             if fallback not in models_to_try:
@@ -321,7 +356,7 @@ Bạn có quyền truy cập dữ liệu thời gian thực từ 3 module: Nhân
 
         last_error = None
         for model_name in models_to_try:
-            
+            # Với mỗi model: thử tối đa 3 lần, backoff tăng dần (1s, 2s, 4s)
             delay = 1
             for attempt in range(3):
                 try:
@@ -336,13 +371,15 @@ Bạn có quyền truy cập dữ liệu thời gian thực từ 3 module: Nhân
                     if e.code == 503:
                         time.sleep(delay)
                         delay *= 2
-                        continue  
+                        continue  # thử lại cùng model
                     else:
-
+                        # Lỗi khác 503 (400, 403, 404...) -> không có ích khi retry
                         raise UserError(f"Lỗi Gemini API ({e.code}): {err_msg}")
                 except urllib.error.URLError as e:
                     raise UserError(f"Không kết nối được Gemini: {str(e.reason)}")
-            
+            # Hết 3 lần thử với model này vẫn 503 -> chuyển sang model dự phòng tiếp theo
+
+        # Đã thử hết mọi model, mọi lần retry đều thất bại
         code, msg = last_error if last_error else (503, "Không rõ lỗi")
         raise UserError(
             f"Lỗi Gemini API ({code}): {msg}\n\n"
@@ -354,7 +391,7 @@ Bạn có quyền truy cập dữ liệu thời gian thực từ 3 module: Nhân
     # ── Format AI response sang HTML ──────────────────────────────
     @staticmethod
     def _format_html(text):
-        """Chuyển markdown của Gemini sang HTML đẹp."""
+        
         html = ''
         for line in text.split('\n'):
             s = line.strip()
