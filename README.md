@@ -98,7 +98,7 @@ Quản lý hồ sơ nhân sự, lịch sử công tác và chứng chỉ.
 
 | Danh sách Nhân viên | Form Nhân viên |
 |:---:|:---:|
-| ![Danh sách Nhân viên](./docs/img/nhan_vien_tree.png) | ![Form Nhân viên](./docs/img/nhan_vien_form.png) |
+| ![Danh sách Nhân viên](./docs/img/nhan_vien_tree.png) | ![Form Nhân viên](./docs/img/form_nhan_vien.png) |
 | *Danh sách nhân viên theo phòng ban* | *Hồ sơ nhân viên: chức vụ, đơn vị, lịch sử công tác, chứng chỉ* |
 
 ### Phân hệ AI Chatbot
