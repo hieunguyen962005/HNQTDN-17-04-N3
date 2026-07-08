@@ -3,18 +3,7 @@ from odoo.exceptions import ValidationError, UserError
 
 
 class DuAn(models.Model):
-    """
-    Model Quản lý Dự án.
-
-    LUỒNG MỨC 2 (Tự động hóa):
-        HRM (nhan_vien) → DuAn (du_an) [XÁC NHẬN] → CongViec (cong_viec) [TỰ ĐỘNG TẠO]
-
-    Ghi chú kỹ thuật:
-        - One2many sang 'cong_viec' được khai báo an toàn bằng cách
-          kiểm tra module tồn tại trước khi dùng (env.get).
-        - Khi quan_ly_cong_viec chưa cài: mọi compute trả về 0, không lỗi.
-        - Khi quan_ly_cong_viec đã cài: hoạt động đầy đủ.
-    """
+    
     _name = 'du_an'
     _description = 'Dự án'
     _rec_name = 'ten_du_an'
@@ -131,7 +120,7 @@ class DuAn(models.Model):
 
     # ── Workflow actions ───────────────────────────────────────────
     def action_xac_nhan(self):
-        """[TRIGGER MỨC 2] Xác nhận → tự động tạo công việc cho từng thành viên."""
+        
         for r in self:
             if r.trang_thai != 'nhap':
                 raise UserError("Chỉ xác nhận được dự án đang ở trạng thái Nháp!")
@@ -186,10 +175,7 @@ class DuAn(models.Model):
 
     # ── Core: Tự động tạo công việc (Mức 2) ───────────────────────
     def _tu_dong_tao_cong_viec(self):
-        """
-        [MỨC 2] Tạo công việc khởi động cho mỗi thành viên.
-        Kiểm tra module cong_viec tồn tại trước khi tạo.
-        """
+        
         CongViec = self.env.get('cong_viec')
         if CongViec is None:
             return 0

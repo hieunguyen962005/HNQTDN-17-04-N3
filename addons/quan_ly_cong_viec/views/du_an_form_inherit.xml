@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!--
-            Kế thừa form view của du_an (module quan_ly_du_an)
-            để thêm tab "Công việc" hiển thị cong_viec_ids.
-            Đặt ở đây vì field cong_viec_ids chỉ tồn tại khi
-            module quan_ly_cong_viec được cài (xem du_an_inherit.py).
-        -->
+        
         <record id="view_du_an_form_inherit_cong_viec" model="ir.ui.view">
             <field name="name">du_an.form.inherit.cong_viec</field>
             <field name="model">du_an</field>

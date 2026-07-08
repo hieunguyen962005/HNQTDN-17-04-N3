@@ -2,16 +2,7 @@ from odoo import models, fields, api
 
 
 class DuAnInherit(models.Model):
-    """
-    Mở rộng model du_an (đã định nghĩa trong module quan_ly_du_an)
-    để thêm quan hệ One2many sang cong_viec.
-
-    Đặt ở ĐÂY (trong quan_ly_cong_viec) thay vì trong quan_ly_du_an
-    vì module quan_ly_cong_viec phụ thuộc (depends) quan_ly_du_an,
-    nên lúc file này load, model 'cong_viec' đã chắc chắn tồn tại.
-    Điều này tránh lỗi KeyError khi quan_ly_du_an được cài độc lập
-    (không có quan_ly_cong_viec).
-    """
+    
     _inherit = 'du_an'
 
     cong_viec_ids = fields.One2many(

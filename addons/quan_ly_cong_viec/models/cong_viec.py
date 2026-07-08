@@ -4,16 +4,7 @@ from datetime import date
 
 
 class CongViec(models.Model):
-    """
-    Model Quản lý Công việc – điểm cuối trong luồng tự động hóa 3 module.
-
-    LUỒNG NGHIỆP VỤ (Mức 2):
-        HRM (nhan_vien) → DuAn (du_an) [XÁC NHẬN] → CongViec (cong_viec) [TỰ ĐỘNG TẠO]
-
-    Khi công việc được HOÀN THÀNH:
-        → Tự động cập nhật trường tien_do_phan_tram của dự án cha (via _compute_tien_do)
-        → Ghi log vào chatter của cả công việc và dự án
-    """
+    
     _name = 'cong_viec'
     _description = 'Công việc'
     _rec_name = 'ten_cong_viec'
@@ -131,13 +122,7 @@ class CongViec(models.Model):
             r.message_post(body="📋 Công việc đã nộp báo cáo, chờ phê duyệt.")
 
     def action_hoan_thanh(self):
-        """
-        [TỰ ĐỘNG HÓA MỨC 2] Khi hoàn thành công việc:
-        - Cập nhật trạng thái → hoan_thanh
-        - Ghi ngày hoàn thành
-        - Trigger recompute tien_do_phan_tram trên dự án cha (qua cong_viec_ids → _compute_tien_do)
-        - Ghi log vào chatter dự án
-        """
+        
         for r in self:
             if r.trang_thai not in ('dang_thuc_hien', 'cho_duyet', 'chua_bat_dau'):
                 raise UserError("Không thể hoàn thành công việc ở trạng thái này!")
@@ -186,10 +171,7 @@ class CongViec(models.Model):
     # ── Scheduled action: phát hiện quá hạn ───────────────────────
     @api.model
     def _cap_nhat_qua_han(self):
-        """
-        Cron job: chạy hàng ngày, cập nhật trạng thái quá hạn.
-        (Cấu hình trong data/ir_cron.xml nếu cần)
-        """
+        
         qua_han = self.search([
             ('trang_thai', 'in', ['chua_bat_dau', 'dang_thuc_hien']),
             ('deadline', '<', date.today().isoformat()),

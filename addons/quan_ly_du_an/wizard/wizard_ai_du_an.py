@@ -6,23 +6,7 @@ from odoo.exceptions import UserError
 
 
 class WizardAIDuAn(models.TransientModel):
-    """
-    [MỨC 3 – Tích hợp AI – Google Gemini FREE]
-    Wizard AI phân tích dự án sử dụng Google Gemini API (miễn phí).
-
-    Lấy API key miễn phí tại: https://aistudio.google.com/apikey
-    Giới hạn: 1,500 requests/ngày, không cần thẻ tín dụng.
-
-    Tính năng 1 – Chatbot hỏi đáp:
-        Input : câu hỏi + dữ liệu dự án thật từ Odoo
-        Xử lý : gửi lên Gemini API với context dự án
-        Output: phân tích tiếng Việt, ghi log chatter dự án
-
-    Tính năng 2 – AI đề xuất phân công:
-        Input : thông tin thành viên (chức vụ từ HRM) + yêu cầu
-        Xử lý : Gemini phân tích, trả JSON danh sách công việc
-        Output: tự động tạo cong_viec trong Odoo, gán đúng người
-    """
+    
     _name = 'wizard.ai_du_an'
     _description = 'AI Phân tích Dự án (Google Gemini)'
 

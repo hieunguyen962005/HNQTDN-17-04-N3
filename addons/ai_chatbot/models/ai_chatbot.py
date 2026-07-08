@@ -9,13 +9,10 @@ from odoo.exceptions import UserError
 
 
 class AIChatSession(models.Model):
-    """
-    [MỨC 3 – AI/External API]
-    Phiên chatbot AI toàn hệ thống — truy vấn dữ liệu từ cả 3 module.
 
-    Ô nhập câu hỏi + lịch sử hội thoại nằm chung trên form này
-    để tránh phải chuyển màn hình sau khi gửi câu hỏi.
-    """
+
+
+    
     _name = 'ai.chat.session'
     _description = 'Phiên Chat AI'
     _rec_name = 'tieu_de'
@@ -52,11 +49,7 @@ class AIChatSession(models.Model):
 
     # ── Action chính: Gửi tin nhắn ────────────────────────────────
     def action_gui_tin_nhan(self):
-        """
-        Người dùng gửi câu hỏi → AI trả lời dựa trên dữ liệu hệ thống.
-        Chạy trực tiếp trên record ai.chat.session đang mở, không
-        chuyển hướng sang model/action khác -> form tự refresh tại chỗ.
-        """
+        
         self.ensure_one()
         if not self.cau_hoi_moi or not self.cau_hoi_moi.strip():
             raise UserError("Vui lòng nhập câu hỏi!")
@@ -111,13 +104,13 @@ class AIChatSession(models.Model):
             self.tieu_de = tieu_de
 
         # 6. Xóa ô nhập — KHÔNG return action điều hướng.
-        # Odoo sẽ tự reload lại đúng record/form hiện tại.
+        
         self.cau_hoi_moi = False
         return True
 
 
 class AIChatMessage(models.Model):
-    """Tin nhắn trong phiên chat AI + các hàm tiện ích gọi Gemini."""
+    
     _name = 'ai.chat.message'
     _description = 'Tin nhắn Chat AI'
     _order = 'create_date asc'
@@ -134,9 +127,7 @@ class AIChatMessage(models.Model):
     # ── Thu thập toàn bộ dữ liệu hệ thống ─────────────────────────
     @api.model
     def _lay_du_lieu_he_thong(self):
-        """
-        Thu thập dữ liệu thật từ cả 3 module Odoo để làm context cho AI.
-        """
+        
         today = date.today()
         lines = [
             f"=== DỮ LIỆU HỆ THỐNG ERP ODOO (cập nhật: {today}) ===",
@@ -144,12 +135,7 @@ class AIChatMessage(models.Model):
         ]
 
         # ── 1. MODULE HRM ──────────────────────────────────────────
-        # Lưu ý: KHÔNG dùng "if self.env.get('nhan_vien'):" để kiểm tra model
-        # có tồn tại hay không -> self.env['nhan_vien'] luôn trả về 1 recordset
-        # (dù rỗng), và recordset rỗng luôn là falsy -> điều kiện luôn sai,
-        # khiến toàn bộ khối này không bao giờ chạy. Vì nhan_su là dependency
-        # bắt buộc của ai_chatbot (khai báo trong __manifest__.py) nên model
-        # này chắc chắn tồn tại, gọi thẳng không cần kiểm tra.
+
         NhanVien = self.env['nhan_vien']
         DonVi    = self.env['don_vi']
 
@@ -266,10 +252,7 @@ class AIChatMessage(models.Model):
     # ── Gọi Gemini API ─────────────────────────────────────────────
     @api.model
     def _goi_gemini(self, messages_history, cau_hoi_moi):
-        """
-        Gọi Google Gemini API với lịch sử hội thoại (multi-turn chat).
-        Tự động retry 1 lần nếu gặp lỗi 503 (server quá tải tạm thời).
-        """
+        
         config = self.env['ai.config'].search([('active', '=', True)], limit=1)
         api_key = config.gemini_api_key if config else ''
         if not api_key:
@@ -330,7 +313,7 @@ Bạn có quyền truy cập dữ liệu thời gian thực từ 3 module: Nhân
                 result = json.loads(resp.read().decode('utf-8'))
                 return result['candidates'][0]['content']['parts'][0]['text']
 
-        # Danh sách model thử lần lượt: model đã chọn -> các model dự phòng nhẹ hơn
+        
         models_to_try = [model]
         for fallback in ('gemini-2.5-flash-lite', 'gemini-2.5-flash'):
             if fallback not in models_to_try:
@@ -338,7 +321,7 @@ Bạn có quyền truy cập dữ liệu thời gian thực từ 3 module: Nhân
 
         last_error = None
         for model_name in models_to_try:
-            # Với mỗi model: thử tối đa 3 lần, backoff tăng dần (1s, 2s, 4s)
+            
             delay = 1
             for attempt in range(3):
                 try:
@@ -353,15 +336,13 @@ Bạn có quyền truy cập dữ liệu thời gian thực từ 3 module: Nhân
                     if e.code == 503:
                         time.sleep(delay)
                         delay *= 2
-                        continue  # thử lại cùng model
+                        continue  
                     else:
-                        # Lỗi khác 503 (400, 403, 404...) -> không có ích khi retry
+
                         raise UserError(f"Lỗi Gemini API ({e.code}): {err_msg}")
                 except urllib.error.URLError as e:
                     raise UserError(f"Không kết nối được Gemini: {str(e.reason)}")
-            # Hết 3 lần thử với model này vẫn 503 -> chuyển sang model dự phòng tiếp theo
-
-        # Đã thử hết mọi model, mọi lần retry đều thất bại
+            
         code, msg = last_error if last_error else (503, "Không rõ lỗi")
         raise UserError(
             f"Lỗi Gemini API ({code}): {msg}\n\n"

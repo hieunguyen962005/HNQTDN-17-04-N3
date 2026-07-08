@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!-- Menu AI xuất hiện trên thanh điều hướng chính -->
+        
         <menuitem id="menu_ai_root"
                   name="🤖 AI Chatbot"
                   sequence="99"

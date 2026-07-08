@@ -33,7 +33,7 @@ Platform ERP được áp dụng vào học phần Thực tập doanh nghiệp d
 </p>
 
 📌 Poster trình bày tổng quan về kiến trúc hệ thống, các phân hệ chính và tính năng nổi bật của dự án.
-Bấm vào ảnh để xem bản PDF đầy đủ độ phân giải (dùng khi in khổ lớn).
+
 
 ---
 
@@ -66,7 +66,7 @@ Bấm vào ảnh để xem bản PDF đầy đủ độ phân giải (dùng khi 
 
 ## 📸 Giao diện & Chức năng
 
-> ⚠️ Các ảnh bên dưới là vị trí đề xuất — hãy tự chụp màn hình hệ thống đang chạy và đặt đúng tên file vào thư mục `docs/img/` tương ứng trước khi nộp báo cáo.
+
 
 ### Phân hệ Quản lý Dự án
 Quản lý toàn diện dự án, thành viên và tiến độ.

@@ -3,11 +3,7 @@ from odoo.exceptions import UserError
 
 
 class WizardPhanCongCongViec(models.TransientModel):
-    """
-    Wizard: Phân công công việc hàng loạt cho nhiều nhân viên cùng lúc.
-    Người dùng chọn dự án → chọn danh sách nhân viên → nhập thông tin chung
-    → hệ thống tạo công việc cho từng người.
-    """
+    
     _name = 'wizard.phan_cong_cong_viec'
     _description = 'Phân công công việc hàng loạt'
 
@@ -60,7 +56,7 @@ class WizardPhanCongCongViec(models.TransientModel):
             self.nhan_vien_ids = False
 
     def action_phan_cong(self):
-        """Tạo công việc cho từng nhân viên được chọn."""
+        
         self.ensure_one()
         if not self.nhan_vien_ids:
             raise UserError("Vui lòng chọn ít nhất một nhân viên để phân công!")

@@ -2,7 +2,7 @@ from odoo import models, fields
 
 
 class AIConfig(models.Model):
-    """Lưu cấu hình API key Gemini toàn hệ thống."""
+    
     _name = 'ai.config'
     _description = 'Cấu hình AI Chatbot'
     _rec_name = 'ten_cau_hinh'
