@@ -133,7 +133,7 @@ Trợ lý AI tra cứu dữ liệu toàn hệ thống bằng ngôn ngữ tự nh
 
 #### 3.1.1. Tải project
 ```
-git clone https://github.com/TTDN-17-04-N3.git
+git clone https://github.com/HNQTDN-17-04-N3.git
 ```
 #### 3.1.2. Cài đặt các thư viện cần thiết
 Người sử dụng thực thi các lệnh sau để cài đặt các thư viện cần thiết
